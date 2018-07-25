@@ -59,6 +59,14 @@ public class ConfigurarProducto extends javax.swing.JFrame {
             }
         });
 
+        TextPrompt placeholderNombre = new TextPrompt("NOMBRE", jTextFieldNombre);
+        placeholderNombre.changeAlpha(0.75f);
+        placeholderNombre.changeStyle(Font.ITALIC);
+
+        TextPrompt placeholderPrecio = new TextPrompt("NOMBRE", jTextFieldPrecio);
+        placeholderPrecio.changeAlpha(0.75f);
+        placeholderPrecio.changeStyle(Font.ITALIC);
+
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("ID");
         jLabel2.setPreferredSize(new java.awt.Dimension(100, 14));

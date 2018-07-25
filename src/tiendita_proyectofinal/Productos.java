@@ -9,13 +9,9 @@ import Clase.TextPrompt;
 import Clase.conectorSQL;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTextField;
 import javax.swing.table.*;
 
 /**
@@ -36,17 +32,18 @@ public class Productos extends javax.swing.JFrame {
         Connection conection = conectorSQL.getInstance().getConnection();
         ResultSet rs = null;
         Statement st = null;
-        String sql = "SELECT id,nombre,precio,descuento FROM producto";
+        String sql = "SELECT id,nombre,precio,costo,descuento FROM producto";
         
         st = conection.createStatement();
         rs = st.executeQuery(sql);
-        DefaultTableModel modeloTabla = new DefaultTableModel(new Object[][]{}, new String[]{"ID","NOMBRE","PRECIO","DESCUENTO"});
+        DefaultTableModel modeloTabla = new DefaultTableModel(new Object[][]{}, new String[]{"ID","NOMBRE","PRECIO","COSTO","DESCUENTO"});
         
         while (rs.next()) {
             modeloTabla.addRow(new String[]{
                 rs.getString("id"),
                 rs.getString("nombre"),
                 rs.getString("precio"),
+                rs.getString("costo"),
                 rs.getString("descuento")
             });
         }
