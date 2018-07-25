@@ -5,7 +5,9 @@
  */
 package tiendita_proyectofinal;
 
+import Clase.TextPrompt;
 import Clase.conectorSQL;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.util.logging.Level;
