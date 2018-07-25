@@ -28,25 +28,29 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnBack" max="32767" attributes="0"/>
                   <Component id="jLabel1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="btnVender" min="-2" pref="120" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnBuscar" min="-2" pref="120" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jLabel8" max="32767" attributes="0"/>
+                          <Component id="jLabel6" max="32767" attributes="0"/>
                           <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel4" alignment="0" pref="100" max="32767" attributes="0"/>
                           <Component id="jLabel2" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jTextFieldDescuento" alignment="1" max="32767" attributes="0"/>
                           <Component id="jTextFieldCantidad" alignment="0" max="32767" attributes="0"/>
                           <Component id="jTextFieldPrecio" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jTextFieldId" max="32767" attributes="0"/>
+                          <Component id="jTextFieldId" alignment="1" max="32767" attributes="0"/>
                           <Component id="jTextFieldNombre" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextFieldTotal" max="32767" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="btnVender" min="-2" pref="120" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnBuscar" min="-2" pref="120" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -72,6 +76,16 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldPrecio" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldDescuento" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldTotal" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -116,11 +130,17 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldId">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldIdKeyPressed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="TextPrompt placeholderID = new TextPrompt(&quot;ID&quot;, jTextFieldId);&#xa;placeholderID.changeAlpha(0.75f);&#xa;placeholderID.changeStyle(Font.ITALIC);"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldNombre">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="TextPrompt placeholderNombre = new TextPrompt(&quot;NOMBRE&quot;, jTextFieldNombre);&#xa;placeholderNombre.changeAlpha(0.75f);&#xa;placeholderNombre.changeStyle(Font.ITALIC);"/>
       </AuxValues>
@@ -161,8 +181,39 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldPrecio">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="TextPrompt placeholderPrecio = new TextPrompt(&quot;PRECIO&quot;, jTextFieldPrecio);&#xa;placeholderPrecio.changeAlpha(0.75f);&#xa;placeholderPrecio.changeStyle(Font.ITALIC);"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel6">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="DESCUENTO"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextFieldDescuento">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="TextPrompt placeholderDescuento = new TextPrompt(&quot;DESCUENTO&quot;, jTextFieldDescuento);&#xa;placeholderDescuento.changeAlpha(0.75f);&#xa;placeholderDescuento.changeStyle(Font.ITALIC);"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel8">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="TOTAL"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextFieldTotal">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="TextPrompt placeholderTotal = new TextPrompt(&quot;PRECIO&quot;, jTextFieldTotal);&#xa;placeholderTotal.changeAlpha(0.75f);&#xa;placeholderTotal.changeStyle(Font.ITALIC);"/>
       </AuxValues>
     </Component>
   </SubComponents>

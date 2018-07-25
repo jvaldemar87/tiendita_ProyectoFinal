@@ -5,12 +5,13 @@
  */
 package tiendita_proyectofinal;
 
-import Clase.conectorSQL;
-import Clase.TextPrompt;
+import Clase.*;
 import java.awt.Font;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,6 +47,10 @@ public class VenderProducto extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldPrecio = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextFieldDescuento = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jTextFieldTotal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -64,10 +69,16 @@ public class VenderProducto extends javax.swing.JFrame {
         TextPrompt placeholderID = new TextPrompt("ID", jTextFieldId);
         placeholderID.changeAlpha(0.75f);
         placeholderID.changeStyle(Font.ITALIC);
+        jTextFieldId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldIdKeyPressed(evt);
+            }
+        });
 
         TextPrompt placeholderNombre = new TextPrompt("NOMBRE", jTextFieldNombre);
         placeholderNombre.changeAlpha(0.75f);
         placeholderNombre.changeStyle(Font.ITALIC);
+        jTextFieldNombre.setEditable(false);
 
         TextPrompt placeholderCantidad = new TextPrompt("CANTIDAD", jTextFieldCantidad);
         placeholderCantidad.changeAlpha(0.75f);
@@ -100,6 +111,23 @@ public class VenderProducto extends javax.swing.JFrame {
         TextPrompt placeholderPrecio = new TextPrompt("PRECIO", jTextFieldPrecio);
         placeholderPrecio.changeAlpha(0.75f);
         placeholderPrecio.changeStyle(Font.ITALIC);
+        jTextFieldPrecio.setEditable(false);
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel6.setText("DESCUENTO");
+
+        TextPrompt placeholderDescuento = new TextPrompt("DESCUENTO", jTextFieldDescuento);
+        placeholderDescuento.changeAlpha(0.75f);
+        placeholderDescuento.changeStyle(Font.ITALIC);
+        jTextFieldDescuento.setEditable(false);
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel8.setText("TOTAL");
+
+        TextPrompt placeholderTotal = new TextPrompt("PRECIO", jTextFieldTotal);
+        placeholderTotal.changeAlpha(0.75f);
+        placeholderTotal.changeStyle(Font.ITALIC);
+        jTextFieldTotal.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,22 +138,26 @@ public class VenderProducto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnVender, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldPrecio, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldId)
-                            .addComponent(jTextFieldNombre)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnVender, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldDescuento, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldCantidad)
+                            .addComponent(jTextFieldPrecio)
+                            .addComponent(jTextFieldId, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldNombre, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldTotal))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -145,6 +177,14 @@ public class VenderProducto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextFieldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jTextFieldDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -176,8 +216,20 @@ public class VenderProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        // TODO add your handling code here:
+        try {
+            venderProducto();
+        } catch (SQLException ex) {
+            Logger.getLogger(VenderProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnVenderActionPerformed
+
+    private void jTextFieldIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldIdKeyPressed
+        try {
+            buscaProducto();
+        } catch (SQLException ex) {
+            Logger.getLogger(VenderProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTextFieldIdKeyPressed
 
     /**
      * @param args the command line arguments
@@ -223,10 +275,14 @@ public class VenderProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jTextFieldCantidad;
+    private javax.swing.JTextField jTextFieldDescuento;
     private javax.swing.JTextField jTextFieldId;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPrecio;
+    private javax.swing.JTextField jTextFieldTotal;
     // End of variables declaration//GEN-END:variables
 
     private void buscaProducto() throws SQLException{
@@ -242,6 +298,35 @@ public class VenderProducto extends javax.swing.JFrame {
             System.out.println("si entro");
             jTextFieldNombre.setText(rs.getString(2));
             jTextFieldPrecio.setText(rs.getString(3));
+            jTextFieldDescuento.setText(rs.getString(4));
+            float totalFloat = Float.parseFloat(rs.getString(3)) - Float.parseFloat(rs.getString(4));
+            jTextFieldTotal.setText(Float.toString(totalFloat));
+        }
+    }
+
+    private void venderProducto() throws SQLException{
+        Connection conection = conectorSQL.getInstance().getConnection();
+        ResultSet rs = null;
+        Statement st = null;
+        String idString = jTextFieldId.getText();
+        String cantidadString = jTextFieldCantidad.getText();
+        String totalString = jTextFieldTotal.getText();
+        java.util.Date dHoy = new java.util.Date();
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String fecha_inserString = ft.format(dHoy);
+        if(idString.equals("") || cantidadString.equals("") || totalString.equals("")){
+            JOptionPane.showMessageDialog(rootPane, "falta producto o cantidad");
+        }
+        else{
+            System.out.println("EJECUTAR SQL");
+            String sql = "INSERT INTO "
+                    + "`vendidos` (`id`, `id_producto`, `cantidad`, `fecha_inser`)"
+                    + " VALUES (NULL, '"
+                    + "2', '"
+                    + "100', '"
+                    + "2018-07-25 10:38:19')";
+            st = conection.createStatement();
+            st.executeUpdate(sql);
         }
     }
 }
