@@ -146,6 +146,9 @@
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldCantidad">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldCantidadKeyPressed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="TextPrompt placeholderCantidad = new TextPrompt(&quot;CANTIDAD&quot;, jTextFieldCantidad);&#xa;placeholderCantidad.changeAlpha(0.75f);&#xa;placeholderCantidad.changeStyle(Font.ITALIC);"/>
       </AuxValues>

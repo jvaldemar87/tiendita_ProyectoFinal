@@ -7,6 +7,7 @@ package tiendita_proyectofinal;
 
 import Clase.*;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -83,6 +84,11 @@ public class VenderProducto extends javax.swing.JFrame {
         TextPrompt placeholderCantidad = new TextPrompt("CANTIDAD", jTextFieldCantidad);
         placeholderCantidad.changeAlpha(0.75f);
         placeholderCantidad.changeStyle(Font.ITALIC);
+        jTextFieldCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldCantidadKeyPressed(evt);
+            }
+        });
 
         btnVender.setText("VENDER");
         btnVender.addActionListener(new java.awt.event.ActionListener() {
@@ -217,6 +223,7 @@ public class VenderProducto extends javax.swing.JFrame {
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
         try {
+            buscaProducto();
             venderProducto();
         } catch (SQLException ex) {
             Logger.getLogger(VenderProducto.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,12 +231,25 @@ public class VenderProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void jTextFieldIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldIdKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
         try {
             buscaProducto();
         } catch (SQLException ex) {
             Logger.getLogger(VenderProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }
     }//GEN-LAST:event_jTextFieldIdKeyPressed
+
+    private void jTextFieldCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCantidadKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            try {
+            buscaProducto();
+            venderProducto();
+        } catch (SQLException ex) {
+            Logger.getLogger(VenderProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+    }//GEN-LAST:event_jTextFieldCantidadKeyPressed
 
     /**
      * @param args the command line arguments
@@ -318,15 +338,21 @@ public class VenderProducto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "falta producto o cantidad");
         }
         else{
-            System.out.println("EJECUTAR SQL");
             String sql = "INSERT INTO "
                     + "`vendidos` (`id`, `id_producto`, `cantidad`, `fecha_inser`)"
                     + " VALUES (NULL, '"
-                    + "2', '"
-                    + "100', '"
-                    + "2018-07-25 10:38:19')";
+                    + idString+"', '"
+                    + cantidadString+"', '"
+                    + fecha_inserString+"')";
             st = conection.createStatement();
             st.executeUpdate(sql);
+            JOptionPane.showMessageDialog(rootPane, "Producto vendido");
+            jTextFieldId.setText("");
+            jTextFieldNombre.setText("");
+            jTextFieldPrecio.setText("");
+            jTextFieldDescuento.setText("");
+            jTextFieldTotal.setText("");
+            jTextFieldCantidad.setText("");
         }
     }
 }
