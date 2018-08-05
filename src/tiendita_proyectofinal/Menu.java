@@ -57,6 +57,11 @@ public class Menu extends javax.swing.JFrame {
         });
 
         btnReportes.setText("Reportes");
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Vender");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +124,17 @@ public class Menu extends javax.swing.JFrame {
         venderProducto.show();
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        Reportes reportes;
+        try {
+            reportes = new Reportes();
+            reportes.show();
+            dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnReportesActionPerformed
 
     /**
      * @param args the command line arguments

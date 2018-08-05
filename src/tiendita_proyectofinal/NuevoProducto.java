@@ -8,6 +8,7 @@ package tiendita_proyectofinal;
 import Clase.TextPrompt;
 import Clase.conectorSQL;
 import java.awt.Font;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -114,11 +115,6 @@ public class NuevoProducto extends javax.swing.JFrame {
         TextPrompt placeholderCosto = new TextPrompt("$100.00", txtCosto);
         placeholderCosto.changeAlpha(0.75f);
         placeholderCosto.changeStyle(Font.ITALIC);
-        txtCosto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCostoKeyTyped(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,10 +214,6 @@ public class NuevoProducto extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txtCostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCostoKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCostoKeyTyped
-
     /**
      * @param args the command line arguments
      */
@@ -274,43 +266,42 @@ public class NuevoProducto extends javax.swing.JFrame {
 
     private void agregaProducto() throws SQLException{
         Connection conection = conectorSQL.getInstance().getConnection();
-        ResultSet rs = null;
-        Statement st = null;
+        CallableStatement cs = null;
+        
         String nombre = txtNombre.getText();
         String precio = txtPrecio.getText();
         String descue = txtDescuento.getText();
-        Date dHoy = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String fecha_inserString = ft.format(dHoy);
+        String costo = txtCosto.getText();
 
         if(txtNombre.getText().equals("") || txtPrecio.getText().equals("")){
             JOptionPane.showMessageDialog(rootPane, "falta numero o nombre");
         }
         else if(!descue.equals("")){
-            descue = txtDescuento.getText();
-            String sql = "INSERT INTO "
-                + "`producto` (`id`, `nombre`, `precio`, `costo`, `descuento`, `fecha_inser`, `fecha_modif`)"
-                + "VALUES (NULL, '"
-                + nombre+"', '"
-                + precio+"', '"
-                + descue+"', '"
-                + fecha_inserString+"', '"
-                + fecha_inserString+"')";
-            st = conection.createStatement();
-            st.executeUpdate(sql);
+            String sql = "{CALL agregar_producto("
+                    + "'"+nombre+"', "
+                    + " "+precio+", "
+                    + " "+costo+", "
+                    + " "+descue+")}";
+            cs = conection.prepareCall(sql);
+            cs.execute();
+            txtNombre.setText("");
+            txtPrecio.setText("");
+            txtDescuento.setText("");
+            txtCosto.setText("");
         }
         else{
             descue = "0";
-            String sql = "INSERT INTO "
-                + "`producto` (`id`, `nombre`, `precio`, `descuento`, `fecha_inser`, `fecha_modif`)"
-                + "VALUES (NULL, '"
-                + nombre+"', '"
-                + precio+"', '"
-                + descue+"', '"
-                + fecha_inserString+"', '"
-                + fecha_inserString+"')";
-            st = conection.createStatement();
-            st.executeUpdate(sql);
+            String sql = "{CALL agregar_producto("
+                    + "'"+nombre+"', "
+                    + " "+precio+", "
+                    + " "+costo+", "
+                    + " "+descue+")}";
+            cs = conection.prepareCall(sql);
+            cs.execute();
+            txtNombre.setText("");
+            txtPrecio.setText("");
+            txtDescuento.setText("");
+            txtCosto.setText("");
         }
     }
 }

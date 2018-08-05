@@ -232,6 +232,16 @@ public class Productos extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void buscarDato() throws SQLException {
+        /*
+        Connection conection = conectorSQL.getInstance().getConnection();
+        CallableStatement cs = null;
+        String sql = "{CALL busca_producto('"
+                + jTextFieldBuscar.getText()+"')}";
+        cs = conection.prepareCall(sql);
+        cs.execute();
+        */
+        
+        
         Connection conection = conectorSQL.getInstance().getConnection();
         ResultSet rs = null;
         Statement st = null;
@@ -249,5 +259,6 @@ public class Productos extends javax.swing.JFrame {
         }
         jTableProductos.setModel(modeloTabla);
         jTextFieldBuscar.setText("");
+        
     }
 }

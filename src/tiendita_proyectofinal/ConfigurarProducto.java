@@ -292,18 +292,18 @@ public class ConfigurarProducto extends javax.swing.JFrame {
 
     private void actualizaProducto() throws SQLException {
         if(!jTextFieldId.getText().equals("")){
-            Connection conection = conectorSQL.getInstance().getConnection();
-            Statement st = null;
-            String sql = "UPDATE `producto` SET"
-                    + "`nombre` = '"+jTextFieldNombre.getText()+"', "
-                    + "`precio` = '"+jTextFieldPrecio.getText()+"', "
-                    + "`descuento` = '"+jTextFieldDescuento.getText()+"' "
-                    + "WHERE `producto`.`id` = "+jTextFieldId.getText()+"";
-            st = conection.createStatement();
-            st.executeUpdate(sql);
-            Productos producto = new Productos();
-            producto.show();
-            dispose();
+        Connection conection = conectorSQL.getInstance().getConnection();
+        CallableStatement cs = null;
+        String sql = "{CALL busca_producto("
+                + jTextFieldId.getText()+","
+                + "'+"+ jTextFieldNombre.getText()+"',"
+                + jTextFieldPrecio.getText()+","
+                + jTextFieldId.getText()+")}";
+        cs = conection.prepareCall(sql);
+        cs.execute();
+        Productos producto = new Productos();
+        producto.show();
+        dispose();
         }
         else{
             JOptionPane.showMessageDialog(this, "Dame el ID del producto");
@@ -313,10 +313,10 @@ public class ConfigurarProducto extends javax.swing.JFrame {
     private void borrarProducto() throws SQLException {
         if (!jTextFieldId.getText().equals("")) {
             Connection conection = conectorSQL.getInstance().getConnection();
-            Statement st = null;
-            String sql = "DELETE FROM `producto` WHERE `producto`.`id` = " + jTextFieldId.getText();
-            st = conection.createStatement();
-            st.executeUpdate(sql);
+        CallableStatement cs = null;
+        String sql = "{CALL borra_producto("+ jTextFieldId.getText()+")}";
+            cs = conection.prepareCall(sql);
+            cs.execute();
             Productos producto = new Productos();
             producto.show();
             dispose();
